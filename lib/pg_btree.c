@@ -237,6 +237,7 @@ IndexSpoolEnd(Spooler *self, bool reindex)
 	BTSpool **spools = self->spools;
 	int				i;
 	RelationPtr		indices = self->relinfo->ri_IndexRelationDescs;
+	char			persistence;
 
 	Assert(spools != NULL);
 	Assert(self->relinfo != NULL);
@@ -251,11 +252,16 @@ IndexSpoolEnd(Spooler *self, bool reindex)
 		else if (reindex)
 		{
 			Oid		indexOid = RelationGetRelid(indices[i]);
+			persistence = indices[i]->rd_rel->relpersistence;
 
 			/* Close index before reindex to pass CheckTableNotInUse. */
 			relation_close(indices[i], NoLock);
 			indices[i] = NULL;
+#if PG_VERSION_NUM >= 90500
+			reindex_index(indexOid, false, persistence, 0);
+#else
 			reindex_index(indexOid, false);
+#endif
 			CommandCounterIncrement();
 			BULKLOAD_PROFILE(&prof_reindex);
 		}

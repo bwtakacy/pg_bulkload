@@ -252,10 +252,12 @@ IndexSpoolEnd(Spooler *self, bool reindex)
 		else if (reindex)
 		{
 			Oid		indexOid = RelationGetRelid(indices[i]);
-			persistence = indices[i]->rd_rel->relpersistence;
 
 			/* Close index before reindex to pass CheckTableNotInUse. */
 			relation_close(indices[i], NoLock);
+#if PG_VERSION_NUM >= 90500
+			persistence = indices[i]->rd_rel->relpersistence;
+#endif
 			indices[i] = NULL;
 #if PG_VERSION_NUM >= 90500
 			reindex_index(indexOid, false, persistence, 0);

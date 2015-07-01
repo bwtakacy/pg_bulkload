@@ -7,6 +7,7 @@ before_install:
   - sudo apt-get -y install bc libpam-dev libedit-dev
   - git clone https://github.com/postgres/postgres.git postgres-dev
   - cd postgres-dev
+  - if [ $PGVERSION = 9.5 ] ; then git checkout -b REL9_5_STABLE origin/REL9_5_STABLE; fi
   - export POSTGRES_HOME=/home/travis/build/bwtakacy/pg_bulkload/pgsql/$PGVERSION
   - echo 'export POSTGRES_HOME=/home/travis/build/bwtakacy/pg_bulkload/pgsql/$PGVERSION' >> ~/.bashrc
   - ./configure --prefix=$POSTGRES_HOME

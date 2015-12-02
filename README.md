@@ -1,10 +1,10 @@
 pg_bulkload
 ===========
 
-This is an alternative repository of pg_bulkload.
+This is an private repository of pg_bulkload.
 
-Though the original CVS repository  is well-known, I feel easy to use GIT to daily develop.
-The release of tar balls and RPMs is on pgfoundry :http://pgfoundry.org/projects/pgbulkload .
+The offical repo is https://github.com/ossc-db/pg_bulkload .
+The release of tar balls and RPMs is on there.
 
 -----------
 The maintenance branch is VERSION3_1_STABLE. This branch supports PostgreSQL 8.4 to 9.4.
